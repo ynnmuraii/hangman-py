@@ -2,7 +2,8 @@ import random
 import os
 from typing import List
 from pathlib import Path
-from hangman_ascii import HANGMAN_PICS
+from hangman_ascii import HANGMAN_PICS, HANGMAN_WELCOME
+
 
 def get_words_from_file(file_path: str) -> List[str]:
     file_path = Path("words.txt")
@@ -22,7 +23,7 @@ def hangman_status(word: str, used_letters: set[str], tries: int) -> str:
             status_letters.append(letter)
         else:
             status_letters.append("_")
-    print(HANGMAN_PICS[0 + len(used_letters)])
+    print(HANGMAN_PICS[7 - tries])
     return " ".join(status_letters)
 
 
@@ -30,11 +31,11 @@ def alphabet() -> str:
     return 'абвгдеёжзийклмнопрстуфхчцшщъыьэюя'
 
 
-def clear_console():
+def clear_console() -> None:
     os.system('cls' if os.name == 'nt' else 'clear')
 
 
-def play_hangman():
+def play_hangman() -> None:
     clear_console()
     print("\nУ тебя 7 попыток, чтобы угадать слово."
           "\nЕсли ты угадаешь слово, ты выиграл!\nЕсли ты исчерпаешь попытки, ты проиграл!")
@@ -68,8 +69,7 @@ def play_hangman():
             clear_console()
             print("Неверно!")
             used_letters.add(guess)
-
-        tries -= 1
+            tries -= 1
 
         if tries == 0:
             print("\nТы проиграл! Слово было:", word)
@@ -81,9 +81,12 @@ def play_hangman():
             game_over = True
 
 
+clear_console()
+print("\nДобро пожаловать в \"Виселицу\"!")
 while True:
-    choice = input(
-        "\nДобро пожаловать в \"Виселицу\"! \nНовая игра? (y/n): ").strip().lower()
+    print(HANGMAN_WELCOME)
+    choice: str = input(
+        "\nНовая игра? (y/n): ").strip().lower()
     if choice == 'y':
         play_hangman()
     elif choice == 'n':
