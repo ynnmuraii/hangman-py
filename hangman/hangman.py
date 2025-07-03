@@ -43,9 +43,8 @@ def play_hangman() -> None:
     word = get_random_word(words)
     tries = 7
     used_letters = set()
-    game_over = False
 
-    while tries > 0 and game_over == False:
+    while tries > 0:
         print(f"\nОсталось попыток: {tries}")
         print("\n", hangman_status(word, used_letters, tries))
 
@@ -72,17 +71,15 @@ def play_hangman() -> None:
             tries -= 1
 
         if tries == 0:
+            clear_console()
             print("\nТы проиграл! Слово было:", word)
-            game_over = True
-            break
 
         if all(letter in used_letters for letter in word):
+            clear_console()
             print("\nТы выиграл! Твоё слово: ", word)
-            game_over = True
+            break
 
 
-clear_console()
-print("\nДобро пожаловать в \"Виселицу\"!")
 while True:
     print(HANGMAN_WELCOME)
     choice: str = input(
