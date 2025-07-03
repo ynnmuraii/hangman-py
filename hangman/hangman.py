@@ -15,23 +15,47 @@ def hangman_status(word: str)
  
 
 
-
+def alphabet() -> str:
+    return 'абвгдеёжзийклмнопрстуфхчцшщъыьэюя'
  
 def play_hangman():
-    print("Let's play Hangman!\n You have 6 tries to guess the word."
-          "\n if you guess the word, you win!\n if you run out of tries, you lose!\n")
+    print("Давай поиграем в \"Виселицу\"!\n У тебя 6 попыток, чтобы угадать слово."
+          "\n Если ты угадаешь слово, ты выиграл!\n Если ты исчерпаешь попытки, ты проиграл!\n")
     words = get_words_from_file("words.txt")
     word = get_random_word(words)
-    
+    tries = 8
+    while tries > 0 and not game_over:
+        for tries in range(8, 0, -1):
+            print(f"Осталось попыток: {tries}")
+            
+            guess = input("Введи букву: ").strip().lower()
+            if guess not in alphabet():
+                print("Неверный ввод. Введи букву из русского алфавита.")
+                continue
+            
+            if guess in word:
+                print("Правильно!")
+            elif guess not in word:
+                print("Неверно!")
+                tries -= 1
+            
+            if tries == 0:
+                print("Ты проиграл! Слово было:", word)
+                game_over = True
+                break
+            
+            
+                
+            
 
 
 
     
 while True:
-    choice = input("New game? (y/n): ").strip().lower()
+    choice = input("Ещё раз? (y/n): ").strip().lower()
     if choice == 'y':
         play_hangman()
     elif choice == 'n':
-        print("Bye bye, sweetie!")
+        print("Пока пока!")
         break
 
