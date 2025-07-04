@@ -44,12 +44,6 @@ def clear_console() -> None:
 
 
 def play_hangman() -> None:
-    clear_console()
-
-    print("\nУ тебя 7 попыток, чтобы угадать слово."
-          "\nЕсли ты угадаешь слово, ты выиграл!"
-          "\nЕсли ты исчерпаешь попытки, ты проиграл!")
-
     words = get_words_from_file("words.txt")
     word = get_random_word(words)
     tries = 7
@@ -68,12 +62,12 @@ def play_hangman() -> None:
 
         if guess not in alphabet() or len(guess) != 1:
             last_message = ("\nНеверный ввод."
-                            "Введи одну букву из русского алфавита.")
+                            " Введи одну букву из русского алфавита.")
             continue
 
         if guess in used_letters:
             last_message = ("\nЭта буква уже была использована."
-                            "Попробуй другую.")
+                            " Попробуй другую.")
             continue
 
         if guess in word:
@@ -95,15 +89,20 @@ def play_hangman() -> None:
 
 def main() -> None:
     while True:
-        print(HANGMAN_WELCOME)
+        print(HANGMAN_WELCOME,
+            "\nУ тебя 7 попыток, чтобы угадать слово."
+            "\nЕсли ты угадаешь слово, ты выиграл!"
+            "\nЕсли ты исчерпаешь попытки, ты проиграл!")
         choice: str = input(
-            "\nНовая игра? (y/n): ").strip().lower()
+            "\nХотите начать новую игру? "
+            "Введите \'y\' для продолжения,"
+            " \'n\' для выхода из программы: ").strip().lower()
 
         if choice == 'y':
             play_hangman()
         elif choice == 'n':
             print("\nПока пока!")
-            break
+            return False
 
 
 if __name__ == "__main__":
