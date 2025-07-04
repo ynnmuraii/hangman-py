@@ -6,8 +6,8 @@ from hangman_ascii import HANGMAN_PICS, HANGMAN_WELCOME
 
 
 def get_words_from_file(file_path: str) -> List[str]:
-    file_path = Path("words.txt")
-    with file_path.open("r", encoding="utf-8") as f:
+    file_path = "words.txt"
+    with open(file_path, "r", encoding="utf-8") as f:
         words = f.readlines()
     return [word.strip() for word in words if word.strip()]
 
@@ -47,7 +47,7 @@ def play_hangman() -> None:
     while tries > 0:
         print(f"\nОсталось попыток: {tries}")
         print("\n", hangman_status(word, used_letters, tries))
-
+        print("\nИспользованные буквы:", " ".join(sorted(used_letters)))
         guess = input("\nВведи букву: ").strip().lower()
         if guess not in alphabet() or len(guess) != 1:
             clear_console()
